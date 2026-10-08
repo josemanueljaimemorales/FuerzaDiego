@@ -1,0 +1,8 @@
+{
+  "name":"Fuerza Específica Diego",
+  "short_name":"Fuerza Diego",
+  "display":"standalone",
+  "background_color":"#070d15",
+  "theme_color":"#070d15",
+  "start_url":"./"
+}

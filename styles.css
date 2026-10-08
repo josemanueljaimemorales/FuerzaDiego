@@ -1,0 +1,58 @@
+*{box-sizing:border-box}
+:root{
+  --gun:#070d15;--gun2:#101a27;--silver:#eef3f7;
+  --blue:#2b9dff;--cyan:#58d8ff;--gold:#c9aa62;
+  --line:rgba(190,207,224,.22);
+}
+html,body{margin:0;min-height:100%;font-family:Arial,sans-serif;color:var(--silver)}
+body{
+  background:
+    radial-gradient(circle at 50% -8%,rgba(43,157,255,.18),transparent 32%),
+    radial-gradient(circle at 90% 75%,rgba(201,170,98,.09),transparent 28%),
+    linear-gradient(145deg,#03070d 0%,#0b1420 52%,#04080f 100%);
+}
+body:after{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;
+  background:radial-gradient(circle at center,transparent 0,rgba(0,0,0,.20) 100%);
+}
+button{font:inherit;color:var(--silver);cursor:pointer}
+.shell{width:min(760px,100%);margin:auto;padding:16px}
+.hero,.panel{
+  background:linear-gradient(135deg,rgba(13,25,39,.94),rgba(5,10,17,.90),rgba(29,25,18,.50));
+  border:1px solid var(--line);border-radius:22px;
+  box-shadow:0 20px 60px rgba(0,0,0,.35),inset 0 1px rgba(255,255,255,.07);
+}
+.hero{display:flex;gap:16px;align-items:center;padding:18px;margin-bottom:14px}
+.hero.compact{margin-top:10px}
+.logo{width:92px;height:58px;object-fit:contain;border-radius:14px}
+.eyebrow{font-size:10px;letter-spacing:2px;font-weight:800;color:var(--cyan)}
+h1{margin:3px 0;font-size:28px}
+h2{margin:0 0 14px;font-size:18px}
+p{margin:4px 0;opacity:.72;font-size:13px}
+.panel{padding:16px;margin-bottom:14px}
+.load-grid,.day-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.day-grid{grid-template-columns:repeat(4,1fr)}
+.load-grid button,.day,.exercise,.back{
+  border:1px solid var(--line);border-radius:14px;
+  background:linear-gradient(145deg,rgba(31,44,59,.92),rgba(8,14,22,.92));
+  padding:15px;transition:.15s;
+}
+.load-grid button:hover,.day:hover,.exercise:hover,.back:hover{
+  border-color:rgba(201,170,98,.55);transform:translateY(-1px)
+}
+.load-grid small{opacity:.7}
+.list{display:grid;gap:9px}
+.exercise{display:grid;grid-template-columns:36px 1fr 20px;text-align:left;align-items:center}
+.exercise span{color:var(--gold);font-weight:800}
+.exercise b{font-size:14px}
+.exercise small{text-align:right;font-size:22px;opacity:.7}
+.back{display:inline-block;margin-bottom:10px;padding:10px 14px}
+.lower{margin-top:14px}
+.video-panel h1{font-size:22px}
+.video-wrap{position:relative;width:100%;aspect-ratio:16/9;border-radius:16px;overflow:hidden;background:#000}
+.video-wrap iframe{width:100%;height:100%;border:0}
+footer{text-align:center;opacity:.45;font-size:9px;letter-spacing:2px;padding:8px}
+@media(max-width:560px){
+  .shell{padding:12px}.hero{padding:14px}.logo{width:76px;height:52px}
+  h1{font-size:23px}.load-grid{grid-template-columns:1fr}.day-grid{grid-template-columns:1fr 1fr}
+}
