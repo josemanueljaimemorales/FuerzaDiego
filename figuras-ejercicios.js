@@ -1,6 +1,6 @@
 // Postura de cada ejercicio para figuras.js: ángulos en grados (0 = abajo, 90 = adelante, 180 = arriba, -90 = atrás).
 (function(){
-  const def = FIGURAS.def, P = 186; // altura del piso
+  const def = FIGURAS.def, P = 186, R0 = 7; // altura del piso; apoyo del antebrazo
   const parado = {tronco:180, muslo:0, pierna:0, pie:90, ancla:["l1.A",[100,P]]};
   const sentado = (x=100, y=140) => ({tronco:180, muslo:90, pierna:0, pie:90, cadera:[x,y]});
   const mano = j => j.a1.K;
@@ -26,17 +26,17 @@
     musculos:{pecho:1, deltoides:1, triceps:2},
     equipo:(j,E)=>({atras:E.banco([j.H[0]+10, j.H[1]+10],[j.H[0]-6, j.H[1]+10], 30, false)+E.banco([j.H[0]-10, j.H[1]+6],[j.S[0]-16, j.S[1]+2], 0, false)+E.poste(j.H[0], j.H[1]+12, j.H[1]+40), adelante:E.barra(centroMano(j))})
   });
-  def("Jalón al pecho", {
-    base:{tronco:195, cadera:[100,140], muslo:90, pierna:0, pie:90},
-    inicio:{brazo:172, antebrazo:172}, fin:{brazo:-25, antebrazo:165},
+  def("Jalón al pecho", { // de pie, en polea alta (como en el video)
+    base:Object.assign({}, parado, {tronco:166, muslo:10, pierna:-8}),
+    inicio:{brazo:158, antebrazo:160}, fin:{brazo:-12, antebrazo:160},
     musculos:{dorsal:1, biceps:2, deltoidesPost:2, antebrazo:2},
-    equipo:(j,E)=>({atras:E.banco([j.H[0]-12, j.H[1]+9],[j.H[0]+14, j.H[1]+9], 30)+E.rodillo([j.l1.K[0]-4, j.l1.K[1]-11]), adelante:E.cable(mano(j), [mano(j)[0], 20])+E.barraSola(centroMano(j))})
+    equipo:(j,E)=>({atras:piso(E)+E.poste(168, 14, P+4), adelante:E.cable(mano(j), [164, 18])+E.barraSola(centroMano(j))})
   });
-  def("Remo con mancuerna a una mano", {
-    base:{tronco:95, cadera:[92,110], muslo:-8, pierna:2, pie:90, muslo2:5, pierna2:-90, pie2:-90, brazo2:2, antebrazo2:2},
-    inicio:{brazo:2, antebrazo:2}, fin:{brazo:-115, antebrazo:5},
+  def("Remo con mancuerna a una mano", { // de pie, pies escalonados y la otra mano apoyada
+    base:{tronco:118, muslo:12, pierna:-6, pie:90, muslo2:-28, pierna2:-28, pie2:62, brazo2:55, antebrazo2:58, ancla:["l1.A",[100,P]]},
+    inicio:{brazo:2, antebrazo:2}, fin:{brazo:-118, antebrazo:4},
     musculos:{dorsal:1, deltoidesPost:2, biceps:2, trapecio:2},
-    equipo:(j,E)=>({atras:E.banco([j.l2.K[0]-24, j.l2.K[1]+6],[j.a2.K[0]+6, j.l2.K[1]+6], 26)+E.piso(40,170,j.l1.A[1]+4), adelante:E.mancuernaFrente(centroMano(j))})
+    equipo:(j,E)=>({atras:piso(E)+E.poste(j.a2.K[0]+5, j.a2.K[1]-30, P+4), adelante:E.mancuernaFrente(centroMano(j))})
   });
   def("Face pull en polea", {
     base:parado, inicio:{brazo:95, antebrazo:92}, fin:{brazo:-95, antebrazo:118},
@@ -49,20 +49,18 @@
     musculos:{triceps:1},
     equipo:(j,E)=>({atras:piso(E)+E.poste(30, 30, P+4), adelante:E.cable(mano(j), [32, 36])})
   });
-  def("Curl de bíceps con mancuerna a 30°", {
-    base:{tronco:205, cadera:[100,140], muslo:80, pierna:0, pie:90},
-    inicio:{brazo:-5, antebrazo:-5}, fin:{brazo:-5, antebrazo:150},
+  def("Curl de bíceps con mancuerna a 30°", { // recostado en banco inclinado a 30°, brazos colgando
+    base:{tronco:242, cadera:[110,140], muslo:72, pierna:8, pie:90},
+    inicio:{brazo:0, antebrazo:0}, fin:{brazo:4, antebrazo:150},
     musculos:{biceps:1, antebrazo:2},
-    equipo:(j,E)=>({atras:E.banco([j.H[0]+12, j.H[1]+9],[j.H[0]-8, j.H[1]+9], 30)+E.banco([j.H[0]-10, j.H[1]+4],[j.S[0]-12, j.S[1]-4], 0, false), adelante:E.mancuernaFrente(centroMano(j))})
+    equipo:(j,E)=>({atras:E.banco([j.H[0]+12, j.H[1]+9],[j.H[0]-8, j.H[1]+9], 30)+E.banco([j.H[0]-8, j.H[1]+8],[j.S[0]-8, j.S[1]+12], 0, false)+E.poste(j.S[0]+4, j.S[1]+14, j.H[1]+38), adelante:E.mancuernaFrente(centroMano(j))})
   });
-  def("Curl de muñeca con mancuerna (3 formas)", {
-    base:{tronco:160, cadera:[90,140], muslo:90, pierna:0, pie:90, brazo:28, antebrazo:92},
-    inicio:{mano:20}, fin:{mano:150},
+  def("Curl de muñeca con mancuerna (3 formas)", { // hincado, antebrazos sobre el banco y la muñeca fuera del borde
+    base:{tronco:148, muslo:4, pierna:-90, pie:-90, brazo:42, antebrazo:90, ancla:["l1.K",[86,P]]},
+    inicio:{mano:15}, fin:{mano:150},
     musculos:{antebrazo:1},
-    equipo:(j,E)=>({atras:E.banco([j.H[0]-14, j.H[1]+9],[j.H[0]+12, j.H[1]+9], 30), adelante:E.mancuernaFrente(j.a1.K)})
+    equipo:(j,E)=>({atras:piso(E)+E.banco([j.a1.E[0]-8, j.a1.E[1]+R0], [j.a1.W[0]-1, j.a1.E[1]+R0], P+4-(j.a1.E[1]+R0)), adelante:E.mancuernaFrente(j.a1.K)})
   });
-
-  // ===== MARTES =====
   def("Sentadilla con barra", {
     base:Object.assign({}, parado, {brazo:-55, antebrazo:150}),
     inicio:{}, fin:{tronco:145, muslo:82, pierna:-28},
@@ -140,7 +138,7 @@
     equipo:(j,E)=>({atras:piso(E)+E.poste(160, 22, P+4), adelante:E.cable(mano(j), [158, 26])})
   });
   def("Pullover en polea", {
-    base:Object.assign({}, parado, {tronco:160, muslo:8, pierna:-6}),
+    base:Object.assign({}, parado, {tronco:138, muslo:14, pierna:-8}),
     inicio:{brazo:150, antebrazo:150}, fin:{brazo:15, antebrazo:15},
     musculos:{dorsal:1, triceps:2, pecho:2},
     equipo:(j,E)=>({atras:piso(E)+E.poste(176, 20, P+4), adelante:E.cable(mano(j), [174, 26])})
