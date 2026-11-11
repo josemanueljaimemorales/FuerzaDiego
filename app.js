@@ -18,7 +18,6 @@ async function init(){
 
 function home(){
   exitFullscreen();
-  const carga = localStorage.getItem("fuerzaEspecificaCarga") || "MEDIA · 3x10 · Peso medio";
   document.getElementById("app").innerHTML = `
     <main class="shell home-shell">
       <header class="hero">
@@ -32,18 +31,8 @@ function home(){
         </div>
       </header>
 
-      <section class="panel load-panel">
-        <div class="section-head"><div><span class="section-kicker">01</span><h2>Intensidad de trabajo</h2></div><span class="live-dot">SEMANA</span></div>
-        <div class="load-grid">
-          ${loadButton("ALTA","3×8 · Peso máximo","ALTA · 3x8 · Peso máximo",carga)}
-          ${loadButton("MEDIA","3×10 · Peso medio","MEDIA · 3x10 · Peso medio",carga)}
-          ${loadButton("BAJA","3×12 · Peso bajo","BAJA · 3x12 · Peso bajo",carga)}
-        </div>
-        <div class="selected-load">CARGA SELECCIONADA <b>${escapeHtml(carga.split(" · ")[0])}</b></div>
-      </section>
-
       <section class="panel">
-        <div class="section-head"><div><span class="section-kicker">02</span><h2>Selecciona el día</h2></div><span class="count">${ejercicios.length} ejercicios</span></div>
+        <div class="section-head"><div><span class="section-kicker">01</span><h2>Selecciona el día</h2></div><span class="count">${ejercicios.length} ejercicios</span></div>
         <div class="day-grid">
           ${["Lunes","Martes","Miércoles","Viernes"].map((d,i) => `<button class="day day-${i+1}" onclick="dia('${d}')"><span class="day-num">0${i+1}</span><span class="day-name">${d}</span><span class="day-arrow">↗</span></button>`).join("")}
         </div>
@@ -52,16 +41,6 @@ function home(){
       <div class="training-strip"><span class="pulse"></span><b>PROTOCOLO DIEGO</b><span>Fuerza · Control · Técnica</span></div>
       <footer>ÁGUILAS KIDS CENTER · FUERZA ESPECÍFICA DIEGO</footer>
     </main>`;
-}
-
-function loadButton(title,sub,value,current){
-  const active = current === value ? " active" : "";
-  return `<button class="load-option ${active}" onclick="setCarga('${value}')"><span class="load-title">${title}</span><span class="load-sub">${sub}</span><i></i></button>`;
-}
-
-function setCarga(carga){
-  localStorage.setItem("fuerzaEspecificaCarga", carga);
-  home();
 }
 
 function dia(d){
