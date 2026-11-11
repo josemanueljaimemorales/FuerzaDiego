@@ -32,3 +32,26 @@ h1,h2,.load-title,.day-name{font-family:'Barlow Condensed',Impact,sans-serif}h1{
 @media(max-width:650px){.shell{padding:12px 11px 22px}.hero{padding:17px;gap:13px;border-radius:21px}.brand-mark{width:72px;height:62px;border-radius:16px}.logo{width:64px;height:48px}h1{font-size:32px}.athlete{font-size:17px;letter-spacing:4px}.hero p{font-size:10px}.panel{padding:14px;border-radius:18px}.section-head h2{font-size:21px}.load-grid{gap:7px}.load-option{min-height:80px;padding:12px}.load-title{font-size:22px}.day-grid{grid-template-columns:1fr 1fr;gap:8px}.day{min-height:112px;padding:13px}.day-name{font-size:24px;margin-top:22px}.day-title-row h1{font-size:45px}.exercise-total{font-size:30px}.video-screen{padding:10px;gap:8px}.video-title h1{font-size:23px}.fullscreen-video-wrap{border-radius:10px}.video-bottom{font-size:7px}}
 @media(max-width:390px){.hero{align-items:flex-start}.eyebrow{font-size:8px}.hero p{display:none}.day-grid{grid-template-columns:1fr}.day{min-height:82px}.day-name{margin-top:10px}.day-arrow{top:50%;transform:translateY(-50%)}.load-grid{grid-template-columns:1fr}.load-option{min-height:70px}}
 @media(orientation:landscape) and (max-height:600px){.video-screen{padding:8px;grid-template-rows:auto 1fr auto;grid-template-columns:1fr;gap:6px}.video-title{position:absolute;left:70px;top:8px;max-width:55%}.video-title span{display:none}.video-title h1{font-size:18px}.fullscreen-video-wrap{grid-row:2;height:100%}.video-topbar{grid-row:1}.video-bottom{grid-row:3}}
+
+/* Registro de peso por semana */
+.exercise-card{display:grid;gap:6px;padding-bottom:4px}
+.reg-row{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;padding:0 2px}
+.reg{position:relative;text-align:left;padding:8px 9px;border-radius:11px;border:1px solid rgba(255,255,255,.07);background:rgba(255,255,255,.025);color:var(--white);font:inherit;cursor:pointer;overflow:hidden}
+.reg:before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:#536274}
+.reg-alta:before{background:var(--red)}.reg-media:before{background:var(--gold)}.reg-baja:before{background:var(--green)}
+.reg-title{display:block;font-size:8px;letter-spacing:1px;font-weight:800;color:#9ba8b7;text-transform:uppercase}
+.reg-sub{display:block;font-size:8px;color:#657486;margin-top:1px}
+.reg-peso{display:block;margin-top:4px;font:800 17px 'Barlow Condensed',Impact,sans-serif;color:#7b8898}
+.reg.has .reg-peso{color:var(--white)}
+.reg em{display:block;font-style:normal;font-size:8px;font-weight:800;margin-top:1px}
+.reg em.up{color:var(--green)}.reg em.down{color:var(--orange)}
+.reg-modal{position:fixed;inset:0;z-index:2000;display:grid;place-items:center;padding:16px;background:rgba(0,0,0,.72)}
+.reg-box{width:100%;max-width:380px;max-height:calc(100dvh - 32px);overflow:auto;padding:20px;border-radius:20px;border:1px solid var(--line);background:linear-gradient(145deg,#111b27,#0a1018);box-shadow:0 20px 60px rgba(0,0,0,.6)}
+.reg-kicker{font-size:9px;letter-spacing:1.6px;font-weight:800;color:var(--cyan)}
+.reg-box h2{margin:4px 0 6px;font-family:'Barlow Condensed',Impact,sans-serif;font-size:26px;line-height:1.05}
+.reg-last{margin:0 0 14px;font-size:12px;color:#9ba8b7}.reg-last b{color:var(--white)}
+.reg-box label{display:grid;gap:6px;font-size:10px;letter-spacing:1px;font-weight:800;color:#9ba8b7;text-transform:uppercase}
+.reg-box input{font:800 30px 'Barlow Condensed',Impact,sans-serif;padding:10px 12px;border-radius:12px;border:1px solid rgba(56,213,255,.35);background:#05070b;color:var(--white);width:100%;box-sizing:border-box}
+.reg-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:16px}
+.reg-actions button{padding:12px;border-radius:12px;font-weight:800;font-size:13px;cursor:pointer;border:1px solid rgba(255,255,255,.1)}
+.reg-cancel{background:transparent;color:#b7c1ce}.reg-save{background:var(--blue);color:#fff;border-color:var(--blue)}

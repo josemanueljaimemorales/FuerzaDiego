@@ -78,14 +78,90 @@ function dia(d){
         <div class="exercise-list-head"><span>SECUENCIA DE TRABAJO</span><span>VIDEO</span></div>
         <div class="list">
           ${seleccion.map((x,i) => `
-            <button class="exercise" onclick="video(${i})">
-              <span class="exercise-number">${String(i+1).padStart(2,"0")}</span>
-              <span class="exercise-info"><b>${escapeHtml(x.Ejercicio)}</b><small>${escapeHtml(x.Segmento || "FUERZA ESPECÍFICA")}</small></span>
-              <span class="play-chip">▶</span>
-            </button>`).join("")}
+            <div class="exercise-card">
+              <button class="exercise" onclick="video(${i})">
+                <span class="exercise-number">${String(i+1).padStart(2,"0")}</span>
+                <span class="exercise-info"><b>${escapeHtml(x.Ejercicio)}</b><small>${escapeHtml(x.Segmento || "FUERZA ESPECÍFICA")}</small></span>
+                <span class="play-chip">▶</span>
+              </button>
+              <div class="reg-row">${SEMANAS.map(w => regButton(i,w)).join("")}</div>
+            </div>`).join("")}
         </div>
       </section>
     </main>`;
+}
+
+// Registro de peso por ejercicio y tipo de semana (alta, media, baja). Se guarda en este celular.
+const SEMANAS = [
+  {k:"ALTA", t:"Semana alta", s:"3×8"},
+  {k:"MEDIA", t:"Semana media", s:"3×10"},
+  {k:"BAJA", t:"Semana baja", s:"3×12"}
+];
+const PESOS_KEY = "fuerzaDiegoPesos";
+
+function leerPesos(){
+  try { return JSON.parse(localStorage.getItem(PESOS_KEY)) || {}; } catch(e) { return {}; }
+}
+
+function claveEjercicio(x){ return String(x["Día"]).trim().toLowerCase() + "|" + String(x.Ejercicio).trim().toLowerCase(); }
+
+function formatoPeso(n){ return (Math.round(n * 100) / 100).toLocaleString("es-MX") + " kg"; }
+
+function regButton(i,w){
+  const r = (leerPesos()[claveEjercicio(seleccion[i])] || {})[w.k];
+  let delta = "";
+  if(r && r.anterior != null && r.peso !== r.anterior){
+    const d = r.peso - r.anterior;
+    delta = `<em class="${d > 0 ? "up" : "down"}">${d > 0 ? "▲" : "▼"} ${formatoPeso(Math.abs(d))}</em>`;
+  }
+  return `<button class="reg reg-${w.k.toLowerCase()}${r ? " has" : ""}" onclick="registrar(${i},'${w.k}')">
+    <span class="reg-title">${w.t}</span><span class="reg-sub">${w.s}</span>
+    <span class="reg-peso">${r ? formatoPeso(r.peso) : "Registrar"}</span>${delta}
+  </button>`;
+}
+
+function registrar(i,k){
+  const x = seleccion[i];
+  const w = SEMANAS.find(s => s.k === k);
+  const r = (leerPesos()[claveEjercicio(x)] || {})[k];
+  const fecha = r && r.fecha ? new Date(r.fecha).toLocaleDateString("es-MX", {day:"numeric", month:"short", year:"numeric"}) : "";
+  const cont = document.createElement("div");
+  cont.className = "reg-modal";
+  cont.innerHTML = `
+    <form class="reg-box" onsubmit="guardarPeso(event,${i},'${k}')">
+      <div class="reg-kicker">${w.t.toUpperCase()} · ${w.s}</div>
+      <h2>${escapeHtml(x.Ejercicio)}</h2>
+      <p class="reg-last">${r ? `Último peso: <b>${formatoPeso(r.peso)}</b> · ${fecha}` : "Todavía no hay peso registrado."}</p>
+      <label>Peso que cargaste (kg)
+        <input id="regPeso" type="number" inputmode="decimal" step="0.5" min="0" value="${r ? r.peso : ""}" required>
+      </label>
+      <div class="reg-actions">
+        <button type="button" class="reg-cancel" onclick="cerrarRegistro()">Cancelar</button>
+        <button type="submit" class="reg-save">Guardar</button>
+      </div>
+    </form>`;
+  cont.addEventListener("click", e => { if(e.target === cont) cerrarRegistro(); });
+  document.body.appendChild(cont);
+  const inp = document.getElementById("regPeso");
+  inp.focus(); inp.select();
+}
+
+function guardarPeso(e,i,k){
+  e.preventDefault();
+  const v = parseFloat(String(document.getElementById("regPeso").value).replace(",", "."));
+  if(!(v >= 0)) return;
+  const pesos = leerPesos();
+  const c = claveEjercicio(seleccion[i]);
+  const antes = (pesos[c] || {})[k];
+  pesos[c] = pesos[c] || {};
+  pesos[c][k] = {peso: v, fecha: new Date().toISOString(), anterior: antes ? (antes.peso === v ? antes.anterior ?? null : antes.peso) : null};
+  try { localStorage.setItem(PESOS_KEY, JSON.stringify(pesos)); } catch(err) { alert("No se pudo guardar en este celular."); return; }
+  cerrarRegistro();
+  dia(diaActual);
+}
+
+function cerrarRegistro(){
+  document.querySelectorAll(".reg-modal").forEach(m => m.remove());
 }
 
 function dayNumber(d){ return ({"Lunes":"01","Martes":"02","Miércoles":"03","Viernes":"04"}[d] || ""); }
