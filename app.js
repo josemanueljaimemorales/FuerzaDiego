@@ -6,7 +6,7 @@ const AKC_LOGO = "https://github.com/josemanueljaimemorales/GAV-APP-AKC/blob/mai
 
 async function init(){
   try {
-    const res = await fetch("Fuerza_Especifica_Diego.xlsx");
+    const res = await fetch("Fuerza_Especifica_Diego.xlsx?v=3");
     const buf = await res.arrayBuffer();
     const wb = XLSX.read(buf);
     ejercicios = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], {defval:""});
