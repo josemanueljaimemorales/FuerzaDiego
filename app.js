@@ -60,6 +60,7 @@ function dia(d){
             <div class="exercise-card">
               <button class="exercise" onclick="video(${i})">
                 <span class="exercise-number">${String(i+1).padStart(2,"0")}</span>
+                <span class="exercise-fig">${window.figuraSVG ? figuraSVG(x.Ejercicio) : ""}</span>
                 <span class="exercise-info"><b>${escapeHtml(x.Ejercicio)}</b><small>${escapeHtml(x.Segmento || "FUERZA ESPECÍFICA")}</small></span>
                 <span class="play-chip">▶</span>
               </button>

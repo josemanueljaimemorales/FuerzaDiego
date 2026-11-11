@@ -55,3 +55,9 @@ h1,h2,.load-title,.day-name{font-family:'Barlow Condensed',Impact,sans-serif}h1{
 .reg-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:16px}
 .reg-actions button{padding:12px;border-radius:12px;font-weight:800;font-size:13px;cursor:pointer;border:1px solid rgba(255,255,255,.1)}
 .reg-cancel{background:transparent;color:#b7c1ce}.reg-save{background:var(--blue);color:#fff;border-color:var(--blue)}
+
+/* Dibujo de cada ejercicio junto al nombre */
+.exercise{grid-template-columns:30px 64px 1fr 34px;gap:9px}
+.exercise-fig{width:64px;height:64px;display:block}
+.exercise-fig:empty{visibility:hidden}
+.exercise-fig svg{width:64px;height:64px;display:block;border-radius:12px}
